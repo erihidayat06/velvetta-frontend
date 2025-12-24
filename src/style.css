@@ -1,0 +1,469 @@
+/* Custom Font Face Declarations */
+@font-face {
+  font-family: 'Marcellus';
+  src: url('@/assets/marcelus-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('@/assets/nunitoSans.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Color Palette */
+  --color-title: #F3DBD7; /* Pale pink/off-white */
+  --color-bg: #120B15; /* Very dark purplish-grey */
+  --color-accent: #270637; /* Deep rich purple */
+  --color-body: #9A8F98; /* Muted grey-purple */
+  --color-secondary: #221A26; /* Dark desaturated purple-grey */
+  --color-tertiary: #34283A; /* Warmer dark grey-purple */
+  --color-gold: #F3D6B1; /* Light gold */
+  --color-gold-dark: #C19161; /* Dark gold */
+  
+  /* Design Tokens */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 4px 20px rgba(39, 6, 55, 0.15);
+  --shadow-glow: 0 0 20px rgba(39, 6, 55, 0.3);
+  
+  --gradient-primary: linear-gradient(135deg, #270637 0%, #34283A 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(39, 6, 55, 0.1) 0%, rgba(52, 40, 58, 0.05) 100%);
+  --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+  --gradient-gold: linear-gradient(135deg, #F3D6B1 0%, #C19161 100%);
+}
+
+body {
+  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+#app {
+  min-height: 100vh;
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Custom Vuetify Overrides */
+.v-application {
+  background: var(--color-bg) !important;
+}
+
+.v-card {
+  font-family: 'Nunito Sans', sans-serif !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--color-secondary) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card titles use Marcellus if they're headings */
+.v-card-title.text-h1,
+.v-card-title.text-h2,
+.v-card-title.text-h3,
+.v-card-title.text-h4,
+.v-card-title.text-h5,
+.v-card-title.text-h6 {
+  font-family: 'Marcellus', serif !important;
+}
+
+.v-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(39, 6, 55, 0.3);
+  box-shadow: var(--shadow-soft);
+}
+
+.v-btn {
+  border-radius: var(--radius-md) !important;
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.v-btn--variant-elevated,
+.v-btn--variant-flat {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.v-btn--variant-elevated:hover,
+.v-btn--variant-flat:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.v-btn--variant-elevated:active,
+.v-btn--variant-flat:active {
+  transform: translateY(0);
+}
+
+/* Premium Card Styles */
+.premium-card {
+  background: var(--color-secondary) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl) !important;
+  padding: var(--spacing-lg);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(39, 6, 55, 0.4);
+  box-shadow: var(--shadow-soft);
+}
+
+.gradient-card {
+  background: var(--color-accent) !important; /* Deep rich purple for VIP Talent */
+  border: none !important;
+  box-shadow: var(--shadow-glow) !important;
+}
+
+.soft-card {
+  background: var(--color-tertiary) !important; /* Dark grey-purple for Mystery Talent */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Custom Typography - Headings use Marcellus */
+.text-h1,
+h1.text-h1,
+.text-h2,
+h1.text-h2,
+h2.text-h2,
+.text-h3,
+h1.text-h3,
+h2.text-h3,
+h3.text-h3,
+.text-h4,
+h2.text-h4,
+h3.text-h4,
+h4.text-h4,
+.text-h5,
+h3.text-h5,
+h4.text-h5,
+h5.text-h5,
+.text-h6,
+h3.text-h6,
+h4.text-h6,
+h5.text-h6,
+h6.text-h6 {
+  font-family: 'Marcellus', serif !important;
+}
+
+/* Body text uses Nunito Sans */
+.text-body-1,
+.text-body-2 {
+  font-family: 'Nunito Sans', sans-serif !important;
+}
+
+/* Small text uses Nunito Sans Regular 10px */
+.text-caption {
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+}
+
+.text-premium {
+  color: var(--color-gold) !important;
+  font-weight: 700;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(243, 214, 177, 0.5);
+}
+
+/* Custom Spacing Utilities */
+.section-spacing {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.section-spacing-sm {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Image Overlays */
+.image-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-overlay);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-overlay:hover::after {
+  opacity: 1;
+}
+
+/* Custom Buttons */
+.btn-premium {
+  background: var(--gradient-gold) !important;
+  border: none !important;
+  box-shadow: var(--shadow-soft) !important;
+  color: var(--color-bg) !important;
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.btn-premium:hover {
+  box-shadow: 0 4px 20px rgba(243, 214, 177, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-premium-white {
+  background: var(--color-tertiary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.btn-premium-white:hover {
+  background: var(--color-secondary) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-ghost {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px);
+}
+
+.btn-ghost:hover {
+  background: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Navbar Custom */
+.v-app-bar {
+  background: rgba(18, 11, 21, 0.9) !important; /* var(--color-bg) with opacity */
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+.navbar-logo {
+  color: var(--color-gold) !important;
+  text-decoration: none;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.navbar-link {
+  font-family: 'Nunito Sans', sans-serif !important;
+  color: var(--color-title) !important;
+}
+
+.navbar-link:hover {
+  color: var(--color-gold) !important;
+}
+
+/* Footer Custom */
+.v-footer {
+  background: var(--color-secondary) !important;
+  backdrop-filter: blur(20px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Carousel Custom */
+.v-carousel {
+  border-radius: var(--radius-xl) !important;
+  overflow: hidden;
+}
+
+.v-carousel__item {
+  border-radius: var(--radius-xl) !important;
+}
+
+/* Tabs Custom */
+.v-tabs {
+  background: transparent !important;
+}
+
+.v-tab {
+  font-family: 'Nunito Sans', sans-serif !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+}
+
+.v-tab--selected {
+  background: rgba(39, 6, 55, 0.2) !important;
+  color: var(--color-gold) !important;
+}
+
+/* Expansion Panels Custom */
+.v-expansion-panel {
+  background: var(--color-secondary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: var(--spacing-sm) !important;
+}
+
+.v-expansion-panel-title {
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Input Fields Custom */
+.v-field {
+  font-family: 'Nunito Sans', sans-serif !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.v-field__outline {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.v-field--focused .v-field__outline {
+  border-color: var(--color-accent) !important;
+}
+
+/* Dialog Custom */
+.v-dialog > .v-card {
+  border-radius: var(--radius-xl) !important;
+  background: var(--color-secondary) !important;
+  backdrop-filter: blur(30px) !important;
+}
+
+/* Smooth Transitions - Applied selectively to avoid conflicts */
+.v-card,
+.v-btn,
+.premium-card,
+.talent-card,
+.product-card,
+.news-card {
+  transition-property: transform, box-shadow, border-color, background-color, opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Grid Gap Fix - Prevent overflow with 4 columns */
+@media (min-width: 960px) {
+  .ga-md-4 {
+    gap: 0 !important;
+    margin: 0 -8px !important;
+  }
+  
+  /* Add margin to columns for spacing instead of gap */
+  .ga-md-4 > .v-col {
+    padding: 0 8px !important;
+    margin-bottom: 16px !important;
+  }
+  
+  /* Fix for 2-column layouts (like Contact page) */
+  .ga-md-4 > .v-col[class*="md-6"] {
+    padding: 0 12px !important;
+  }
+}
+
+/* Mobile Text Size Adjustments */
+@media (max-width: 600px) {
+  .text-h1, h1.text-h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .text-h2, h1.text-h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .text-h3, h1.text-h3, h2.text-h3 {
+    font-size: 1.375rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .text-h4, h2.text-h4, h3.text-h4 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .text-h5, h3.text-h5 {
+    font-size: 1.125rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .text-h6, h3.text-h6, h4.text-h6 {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .text-body-1 {
+    font-size: 0.9375rem !important;
+  }
+  
+  .text-body-2 {
+    font-size: 0.875rem !important;
+  }
+  
+  .text-caption {
+    font-size: 10px !important;
+  }
+}
+
+/* Scrollbar Custom */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 20, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(39, 6, 55, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(39, 6, 55, 0.7);
+}
+
