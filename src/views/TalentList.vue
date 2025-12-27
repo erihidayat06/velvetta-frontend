@@ -2,16 +2,17 @@
   <v-container class="px-4 px-md-8 py-12">
     <div class="text-center mb-12">
       <h1 class="text-h3 font-weight-bold mb-4 text-premium">Our Talents</h1>
-      <p class="text-body-1" style="color: rgba(255, 255, 255, 0.6);">Discover our exceptional selection of premium talent</p>
+      <p class="text-body-1" style="color: rgba(255, 255, 255, 0.6)">
+        Discover our exceptional selection of premium talent
+      </p>
     </div>
-    
+
     <v-progress-circular
       v-if="loading"
       indeterminate
       color="primary"
-      class="d-block mx-auto my-12"
-    ></v-progress-circular>
-    
+      class="d-block mx-auto my-12"></v-progress-circular>
+
     <v-row v-else class="ga-0 ga-md-4">
       <v-col
         v-for="talent in talents"
@@ -19,32 +20,32 @@
         cols="6"
         sm="6"
         md="3"
-        lg="3"
-      >
+        lg="3">
         <v-card
           class="talent-list-card cursor-pointer"
-          @click="$router.push(`/talent/${talent.id}`)"
-        >
+          @click="$router.push(`/talent/${talent.id}`)">
           <v-img
             :src="getImageUrl(talent.image)"
             height="420"
             cover
-            class="talent-list-image"
-          >
+            class="talent-list-image">
             <template v-slot:placeholder>
               <div class="d-flex align-center justify-center fill-height">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"></v-progress-circular>
               </div>
             </template>
             <div class="talent-list-overlay">
               <div class="talent-list-info">
                 <h3
                   class="text-h6 font-weight-bold"
-                  :class="{ 'mb-2': !$vuetify.display.xs }"
-                >
+                  :class="{ 'mb-2': !$vuetify.display.xs }">
                   {{ talent.name }}
                 </h3>
-                <v-chip size="small" class="talent-chip">{{ talent.category }}</v-chip>
+                <v-chip size="small" class="talent-chip">{{
+                  talent.category
+                }}</v-chip>
               </div>
             </div>
           </v-img>
@@ -55,33 +56,35 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { talentService } from '@/services/talentService'
-import { getImageUrl } from '@/utils/imageUrl'
+import { ref, onMounted } from "vue";
+import { talentService } from "@/services/talentService";
+import { getImageUrl } from "@/utils/imageUrl";
 
-const talents = ref([])
-const loading = ref(true)
+const talents = ref([]);
+const loading = ref(true);
 
 const loadTalents = async () => {
   try {
-    const response = await talentService.getAll()
+    const response = await talentService.getAll();
     if (response.success) {
-      talents.value = (response.data || []).map(talent => ({
+      talents.value = (response.data || []).map((talent) => ({
         ...talent,
         category: talent.level || talent.category,
-        image: talent.image || (talent.images && talent.images.length > 0 ? talent.images[0] : null)
-      }))
+        image:
+          talent.image ||
+          (talent.images && talent.images.length > 0 ? talent.images[0] : null),
+      }));
     }
   } catch (error) {
-    console.error('Failed to load talents:', error)
+    console.error("Failed to load talents:", error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 onMounted(() => {
-  loadTalents()
-})
+  loadTalents();
+});
 </script>
 
 <style scoped>
@@ -148,15 +151,15 @@ onMounted(() => {
   .talent-list-card {
     border-radius: 16px !important;
   }
-  
+
   .talent-list-image {
     height: 250px !important;
   }
-  
+
   .talent-list-info h3 {
     font-size: 0.875rem !important;
   }
-  
+
   .talent-chip {
     font-size: 0.625rem !important;
     height: 20px !important;
