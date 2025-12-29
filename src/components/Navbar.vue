@@ -4,6 +4,7 @@
     app
     class="navbar-premium"
   >
+  
     <v-container class="d-flex align-center navbar-container" fluid>
       <v-app-bar-title class="navbar-logo-title font-weight-bold pa-0 pt-1">
         <router-link to="/" class="navbar-logo">
@@ -13,39 +14,61 @@
 
       <v-spacer></v-spacer>
 
-      <!-- Desktop Menu -->
-      <div class="d-none d-md-flex align-center ga-2">
-        <v-btn
-          v-for="item in menuItems"
-          :key="item.name"
-          :to="item.path"
-          variant="text"
-          class="navbar-link"
-          size="default"
-        >
-          {{ item.name }}
-        </v-btn>
+     <!-- Desktop Menu -->
+<div class="d-none d-md-flex align-center ga-2">
+  <v-btn
+    v-for="item in menuItems"
+    :key="item.name"
+    :to="item.path"
+    variant="text"
+    class="navbar-link"
+    size="default"
+  >
+    {{ item.name }}
+  </v-btn>
 
-        <v-btn
-          v-if="!isAuthenticated"
-          variant="text"
-          class="navbar-link"
-          size="default"
-          @click="showLoginModal = true"
-        >
-          Login
-        </v-btn>
+  <!-- AUTH -->
+  <v-btn
+    v-if="!isAuthenticated"
+    variant="text"
+    class="navbar-link"
+    size="default"
+    @click="showLoginModal = true"
+  >
+    Login
+  </v-btn>
 
-        <v-btn
-          v-else
-          variant="text"
-          class="navbar-link"
-          size="default"
-          @click="handleLogout"
-        >
-          Logout
-        </v-btn>
-      </div>
+  <!-- USER DROPDOWN -->
+  <v-menu
+    v-else
+    location="bottom end"
+    offset="8"
+  >
+    <template #activator="{ props }">
+      <v-btn
+        v-bind="props"
+        variant="text"
+        class="navbar-link d-flex align-center"
+      >
+        <v-icon start>mdi-account-circle</v-icon>
+        Account
+        <v-icon end size="18">mdi-chevron-down</v-icon>
+      </v-btn>
+    </template>
+
+    <v-list min-width="180">
+      <v-list-item to="/user">
+        <v-list-item-title>User Profile</v-list-item-title>
+      </v-list-item>
+
+      <v-divider />
+
+      <v-list-item @click="handleLogout">
+        <v-list-item-title>Logout</v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-menu>
+</div>
 
       <!-- Mobile Burger Menu -->
       <v-btn
@@ -60,34 +83,53 @@
   </v-app-bar>
 
   <!-- Mobile Navigation Drawer -->
-  <v-navigation-drawer
-    v-model="drawer"
-    temporary
-    location="right"
-    touchless
-    class="mobile-drawer"
-  >
-    <v-list class="mobile-menu-list">
-      <v-list-item
-        v-for="item in menuItems"
-        :key="item.name"
-        :to="item.path"
-        @click="drawer = false"
-      >
-        <v-list-item-title>{{ item.name }}</v-list-item-title>
-      </v-list-item>
+ <v-navigation-drawer
+  v-model="drawer"
+  temporary
+  location="right"
+  touchless
+  class="mobile-drawer"
+>
+  <v-list class="mobile-menu-list">
+    <v-list-item
+      v-for="item in menuItems"
+      :key="item.name"
+      :to="item.path"
+      @click="drawer = false"
+    >
+      <v-list-item-title>{{ item.name }}</v-list-item-title>
+    </v-list-item>
 
-      <v-divider class="my-2"></v-divider>
+    <v-divider class="my-2"></v-divider>
 
-      <v-list-item v-if="!isAuthenticated" @click="showLoginModal = true; drawer = false">
-        <v-list-item-title>Login</v-list-item-title>
-      </v-list-item>
+    <!-- USER PROFILE (MOBILE) -->
+    <v-list-item
+      v-if="isAuthenticated"
+      to="/user"
+      @click="drawer = false"
+    >
+      <v-list-item-title>User Profile</v-list-item-title>
+    </v-list-item>
 
-      <v-list-item v-else @click="handleLogout(); drawer = false">
-        <v-list-item-title>Logout</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
+   
+
+    <!-- AUTH -->
+    <v-list-item
+      v-if="!isAuthenticated"
+      @click="showLoginModal = true; drawer = false"
+    >
+      <v-list-item-title>Login</v-list-item-title>
+    </v-list-item>
+
+    <v-list-item
+      v-else
+      @click="handleLogout(); drawer = false"
+    >
+      <v-list-item-title>Logout</v-list-item-title>
+    </v-list-item>
+  </v-list>
+</v-navigation-drawer>
+
 
   <!-- Login Modal -->
   <LoginModal
@@ -99,9 +141,18 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import LoginModal from '@/components/LoginModal.vue'
 import logoUrl from '@/assets/velvetta-logo.svg'
 
+/* =====================
+   ROUTER
+===================== */
+const router = useRouter()
+
+/* =====================
+   STATE
+===================== */
 const drawer = ref(false)
 const showLoginModal = ref(false)
 
@@ -114,50 +165,65 @@ const menuItems = [
 
 const token = ref(localStorage.getItem('token'))
 
+/* =====================
+   COMPUTED
+===================== */
 const isAuthenticated = computed(() => {
   return !!token.value
 })
 
-const handleLogin = (userData) => {
-  // Update token ref to trigger reactivity
+/* =====================
+   AUTH HANDLERS
+===================== */
+const handleLogin = () => {
   token.value = localStorage.getItem('token')
   showLoginModal.value = false
 }
 
-const handleRegister = (userData) => {
-  // Update token ref to trigger reactivity
+const handleRegister = () => {
   token.value = localStorage.getItem('token')
   showLoginModal.value = false
 }
 
 const handleLogout = () => {
+  // Clear auth data
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  // Update token ref to trigger reactivity
+
+  // Update reactive state
   token.value = null
-  // Force reactivity update for other components
+
+  // Optional: sync with other components / tabs
   window.dispatchEvent(new Event('storage'))
+
+  // Close mobile drawer if open
+  drawer.value = false
+
+  // 🔥 Redirect ke halaman utama
+  router.replace('/')
 }
 
-// Listen for storage changes (e.g., login from another tab)
+/* =====================
+   STORAGE LISTENER
+===================== */
 onMounted(() => {
   const updateToken = () => {
     token.value = localStorage.getItem('token')
   }
-  
-  // Listen for storage events (works for cross-tab changes)
-  // Note: 'storage' event only fires for changes from other tabs/windows
+
+  // Listen for cross-tab auth changes
   window.addEventListener('storage', updateToken)
-  
-  // Initial check
+
+  // Initial sync
   updateToken()
-  
+
   // Cleanup
   return () => {
     window.removeEventListener('storage', updateToken)
   }
 })
 </script>
+
 
 <style scoped>
 .navbar-premium {

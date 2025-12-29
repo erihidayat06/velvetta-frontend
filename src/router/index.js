@@ -1,69 +1,82 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Layout from '@/layouts/DefaultLayout.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import Layout from "@/layouts/DefaultLayout.vue";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     component: Layout,
     children: [
       {
-        path: '',
-        name: 'Home',
-        component: () => import('@/views/Home.vue'),
+        path: "",
+        name: "Home",
+        component: () => import("@/views/Home.vue"),
       },
       {
-        path: '/talent',
-        name: 'TalentList',
-        component: () => import('@/views/TalentList.vue'),
+        path: "/talent",
+        name: "TalentList",
+        component: () => import("@/views/TalentList.vue"),
       },
       {
-        path: '/talent/:id',
-        name: 'TalentDetail',
-        component: () => import('@/views/TalentDetail.vue'),
+        path: "/talent/:id",
+        name: "TalentDetail",
+        component: () => import("@/views/TalentDetail.vue"),
       },
       {
-        path: '/product',
-        name: 'Product',
-        component: () => import('@/views/Product.vue'),
+        path: "/product",
+        name: "Product",
+        component: () => import("@/views/Product.vue"),
       },
       {
-        path: '/casting',
-        name: 'Casting',
-        component: () => import('@/views/Casting.vue'),
+        path: "/casting",
+        name: "Casting",
+        component: () => import("@/views/Casting.vue"),
       },
       {
-        path: '/qna',
-        name: 'QNA',
-        component: () => import('@/views/QNA.vue'),
+        path: "/qna",
+        name: "QNA",
+        component: () => import("@/views/QNA.vue"),
       },
       {
-        path: '/contact',
-        name: 'Contact',
-        component: () => import('@/views/Contact.vue'),
+        path: "/contact",
+        name: "Contact",
+        component: () => import("@/views/Contact.vue"),
       },
       {
-        path: '/mystery-talent',
-        name: 'MysteryTalent',
-        component: () => import('@/views/MysteryTalent.vue'),
+        path: "/mystery-talent",
+        name: "MysteryTalent",
+        component: () => import("@/views/MysteryTalent.vue"),
       },
       {
-        path: '/payment',
-        name: 'Payment',
-        component: () => import('@/views/Payment.vue'),
+        path: "/payment",
+        name: "Payment",
+        component: () => import("@/views/Payment.vue"),
       },
       {
-        path: '/news/:id',
-        name: 'NewsDetail',
-        component: () => import('@/views/NewsDetail.vue'),
+        path: "/news/:id",
+        name: "NewsDetail",
+        component: () => import("@/views/NewsDetail.vue"),
+      },
+      {
+        path: "/user",
+        name: "UserProfile",
+        component: () => import("@/views/UserProfile.vue"),
+        beforeEnter: (to, from, next) => {
+          const token = localStorage.getItem("token");
+
+          if (!token) {
+            next("/");
+          } else {
+            next();
+          }
+        },
       },
     ],
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-})
+});
 
-export default router
-
+export default router;
