@@ -19,7 +19,7 @@ export const getImageUrl = (imagePath) => {
   // Backend serves static files at /uploads (not /api/uploads)
   // So we need to use the base backend URL without /api
   const API_BASE_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+    import.meta.env.VITE_API_URL + "/api" || "http://localhost:3000/api";
   const BACKEND_BASE_URL = API_BASE_URL.replace("/api", ""); // Remove /api to get base URL (http://localhost:3000)
 
   // If path starts with /uploads, use backend base URL directly (not /api)
